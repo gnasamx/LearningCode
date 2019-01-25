@@ -14,6 +14,7 @@ function Counter() {
     () => {
       window.localStorage.setItem('count', count)
     },
+    [count],
     // 🐨 2. pass a second argument to useEffect right here
     // it should be an array of the callback's "dependencies"
     // Said differently: "What variables does the useEffect callback use?"
