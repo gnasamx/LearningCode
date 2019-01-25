@@ -1,3 +1,3 @@
 ## LearningCodeFromOthers
 
-:koala: React Hooks and Suspense introduction by [@kentcdodds](https://github.com/kentcdodds/modern-react)  
+:koala: [@kentcdodds](https://github.com/kentcdodds/modern-react) Workshop on React Hooks and Suspense. [YouTube Link](https://youtu.be/xcZXS_VEJS0)  
