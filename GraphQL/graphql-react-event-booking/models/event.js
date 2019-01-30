@@ -19,6 +19,11 @@ const eventSchema = new Schema({
     type: Date,
     required: true,
   },
+  // Every event has creator
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 module.exports = mongoose.model('Event', eventSchema)
