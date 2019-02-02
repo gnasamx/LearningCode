@@ -151,7 +151,7 @@ module.exports = {
     try {
       const booking = await Booking.findById(args.bookingId).populate('event')
       const event = {
-        ...booking.event_doc,
+        ...booking.event._doc,
         _id: booking.event.id,
         creator: user.bind(this, booking.event._doc.creator),
       }
