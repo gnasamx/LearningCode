@@ -15,13 +15,14 @@ const { ApolloServer, gql } = require('apollo-server')
 
 const typeDefs = gql`
   type Query {
-    hello: String!
+    hello(name: String): String!
     user: User!
   }
 
   type User {
     id: ID!
     username: String!
+    firstLetterOfUsername: String!
   }
 
   type Error {
@@ -42,20 +43,36 @@ const typeDefs = gql`
 
   type Mutation {
     register(userInfo: UserInfo): RegisterResponse!
-    login(userInfo: UserInfo): Boolean!
+    login(userInfo: UserInfo): String!
   }
 `
 
 const resolvers = {
+  User: {
+    firstLetterOfUsername: parent => {
+      return parent.username[0]
+    },
+  },
+
   Query: {
-    hello: () => 'Hello World',
+    hello: (parent, { name }) => {
+      return `hey ${name}`
+    },
     user: () => ({
       id: 1,
       username: 'Bob',
     }),
   },
+
   Mutation: {
-    login: () => true,
+    /**
+     * Resolvers takes 4 parameters
+     */
+    // login: (parent, args, context, info) => {
+    login: (parent, { userInfo: { username } }, context, info) => {
+      console.log(context)
+      return username
+    },
     register: () => ({
       errors: [
         {
@@ -71,6 +88,10 @@ const resolvers = {
   },
 }
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req, res }) => ({ req, res }),
+})
 
 server.listen().then(({ url }) => console.log(`Server started at ${url}`))
