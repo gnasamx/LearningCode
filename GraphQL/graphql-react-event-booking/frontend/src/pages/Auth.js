@@ -1,31 +1,33 @@
 import React, { Component } from 'react'
 
 import './Auth.css'
+import AuthContext from '../context/auth-context'
 
 class AuthPage extends Component {
   constructor(props) {
     super(props)
     this.emailEl = React.createRef()
     this.passwordEl = React.createRef()
+    this.state = {
+      isLogin: true,
+    }
   }
 
-  state = {
-    isLogin: true,
-  }
+  static contextType = AuthContext
 
   switchModeHandler = () => {
     this.setState(prevState => {
-      return { isLogin: !prevState.isLogin };
-    });
-  };
+      return { isLogin: !prevState.isLogin }
+    })
+  }
 
   submitHandler = event => {
-    event.preventDefault();
-    const email = this.emailEl.current.value;
-    const password = this.passwordEl.current.value;
+    event.preventDefault()
+    const email = this.emailEl.current.value
+    const password = this.passwordEl.current.value
 
     if (email.trim().length === 0 || password.trim().length === 0) {
-      return;
+      return
     }
 
     let requestBody = {
@@ -37,8 +39,8 @@ class AuthPage extends Component {
             tokenExpiration
           }
         }
-      `
-    };
+      `,
+    }
 
     if (!this.state.isLogin) {
       requestBody = {
@@ -49,30 +51,37 @@ class AuthPage extends Component {
               email
             }
           }
-        `
-      };
+        `,
+      }
     }
 
     fetch('http://localhost:8000/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Failed!');
+          throw new Error('Failed!')
         }
-        return res.json();
+        return res.json()
       })
       .then(resData => {
-        console.log(resData);
+        console.log(resData)
+        if (resData.data.login.token) {
+          this.context.login(
+            resData.data.login.token,
+            resData.data.login.userId,
+            resData.data.login.tokenExpiration,
+          )
+        }
       })
       .catch(err => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   render() {
     return (
