@@ -5,9 +5,9 @@ const { transformBooking, transformEvent } = require('./merge')
 // const userId = '5c525e37458b2f2d2bf948bb'
 
 module.exports = {
-  bookings: async req => {
+  bookings: async (args, req) => {
     if (!req.isAuth) {
-      throw new Error('Un-authenticated!!!')
+      throw new Error('Unauthenticated!')
     }
 
     try {
@@ -16,7 +16,6 @@ module.exports = {
         return transformBooking(booking)
       })
     } catch (err) {
-      console.log('Booking Schema Error: ', err)
       throw err
     }
   },
