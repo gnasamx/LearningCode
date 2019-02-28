@@ -7,3 +7,7 @@ django-admin startproject app_name
 **:rocket: Run Command** 
 
 python3 manage.py runserver  
+
+**:: New App**
+
+python3 manage.py startapp users
