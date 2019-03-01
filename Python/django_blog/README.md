@@ -8,6 +8,6 @@ django-admin startproject app_name
 
 python3 manage.py runserver  
 
-**:: New App**
+**:golf: New App**
 
 python3 manage.py startapp users
