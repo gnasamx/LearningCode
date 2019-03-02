@@ -21,16 +21,22 @@ So the :question: question is why did we wait so long for the transaction to con
 
 When we send transaction to network (specifically in our case it is Rinkeby test network), to be precise it will go to the one specific node from that network. So our applications are interfacing with one node and that node is then communicating with rest of the nodes from the network.
 
-![Transaction Flow Diagram](https://github.com/gnasamx/LearningCode/raw/master/Ethereum%20%26%20Solidity/Ethereum%20and%20Solidity%20complete%20developers%20guide/assets/Transaction%20Flow%20Diagram.png)
+<p align="center">
+<img src="https://github.com/gnasamx/LearningCode/raw/master/Ethereum%20%26%20Solidity/Ethereum%20and%20Solidity%20complete%20developers%20guide/assets/Transaction%20Flow%20Diagram.png" alt="Transaction Flow Diagram"/>
+</p>
 
 The following is the diagram of one node. Node will have entire copy of blockchain. So let suppose the transaction arrived at this specific node. But we have to keep in mind that you and I are not the only people in the world. There are other people in this world who want to submit transaction as well. So exact same time when you and I submitted the transaction may be two other people did as well. So there are three transaction coming exact same time to this specific node.
 
-![All Trasactions](https://github.com/gnasamx/LearningCode/raw/master/Ethereum%20%26%20Solidity/Ethereum%20and%20Solidity%20complete%20developers%20guide/assets/All%20Transactions.png)
+<p align="center">
+<img src="https://github.com/gnasamx/LearningCode/raw/master/Ethereum%20%26%20Solidity/Ethereum%20and%20Solidity%20complete%20developers%20guide/assets/All%20Transactions.png" alt="All Transactions Diagram">
+</p>
 
 This node is going to take all these transaction('T' is our transaction & 'O' is other transactions)
 and assembles all three transaction into one list of transaction which we refer to as a Block. The node then run some :cyclone: _validation logic_ on this Block. That validation logic is what takes long time.
 
-![Mining](https://github.com/gnasamx/LearningCode/raw/master/Ethereum%20%26%20Solidity/Ethereum%20and%20Solidity%20complete%20developers%20guide/assets/Mining.png)
+<p align="center">
+<img src="https://github.com/gnasamx/LearningCode/raw/master/Ethereum%20%26%20Solidity/Ethereum%20and%20Solidity%20complete%20developers%20guide/assets/Mining.png" alt="Mining Diagram">
+</p>
 
 Validation logic is a general term, which we called it as 'Mining' in Blockchain world. So when these transaction are get assemble into the block, the node start running some :gear: calculations on the block and that process is refer to as _Mining_.
 
