@@ -19,7 +19,7 @@ So when we create a Smart Contract Account that contain our smart contract, we c
 <img src="../assets/External & Contract Accounts.png" alt="External & Contract Account Diagram"/>
 </p>
 
-In our computer/laptop, you and I going to author some amount of code that will as smart contract source. So this is the actual code that instructs contract how to behave and how it should handle money. We will then take that contract code and deploy it a network. When we deploy contract code to the network, it creates instance of the contract(we refer as contract account).
+In our computer/laptop, you and I going to author some amount of code that will serve as smart contract source. So this is the actual code that instructs contract how to behave and how it should handle money. We will then take that contract code and deploy it to a network. When we deploy contract code to the network, it creates instance of the contract(we refer as contract account).
 
 <p align="center">
 <img src="../assets/Contract Deployment.png" alt="Contract Deployment Diagram"/>

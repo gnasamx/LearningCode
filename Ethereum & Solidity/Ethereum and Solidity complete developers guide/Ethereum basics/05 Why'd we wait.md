@@ -15,7 +15,7 @@ to the Rinkeby test network. Then we wait for the transaction to confirm.
 
 So the :question: question is why did we wait so long for the transaction to confirm??
 
-:speech*balloon: \_General Answer*: The Ethereum Blockchain stuff is heavy duty, it is complicated. When the people behind Bitcoin and people behind Ethereum sat down and thinking about the financial system that can be used to replace US dollars, Euros or other currencies out there by definition they had to make a system that robust enough to handles million billion trillion of dollars of values being transfer between people every day. So these systems are not complicated for sake of being complicated but the Blockchain is complicated because it has to solve an incredibly difficult problem. The representation in transfer of billion trillion of dollars between people. thats why it is so complicated.
+:speech_balloon: __General Answer__: The Ethereum Blockchain stuff is heavy duty, it is complicated. When the people behind Bitcoin and people behind Ethereum sat down and thinking about the financial system that can be used to replace US dollars, Euros or other currencies out there by definition they had to make a system that robust enough to handles million billion trillion of dollars of values being transfer between people every day. So these systems are not complicated for sake of being complicated but the Blockchain is complicated because it has to solve an incredibly difficult problem. The representation in transfer of billion trillion of dollars between people. thats why it is so complicated.
 
 ### :zap: Transaction flow
 
