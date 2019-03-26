@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/core": "^7.4.0",
+    "babel-loader": "^8.0.5",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.10",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "scripts": {
+    "dev:build": "webpack -w --mode development",
+    "dev": "cross-env NODE_ENV=development nodemon dist/index.bundle.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
