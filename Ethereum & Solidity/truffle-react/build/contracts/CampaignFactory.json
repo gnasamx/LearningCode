@@ -961,15 +961,15 @@
     "version": "0.5.1+commit.c8a2cb62.Linux.g++"
   },
   "networks": {
-    "1554085071873": {
+    "1554089189422": {
       "events": {},
       "links": {},
-      "address": "0xF218e2eAc2D2856589Be0AC97e98d944324d2953",
-      "transactionHash": "0x2ff9b09296a9041e218adf8845e51e560ebc7018308145bfe399a9b2cb222910"
+      "address": "0xE5c0f2f7930e2317aBF978966E5ccB83abf3D8f7",
+      "transactionHash": "0x9778a1374f33438142fac5503aea8a306ccba4c5ee5a5a552937a35369634089"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-04-01T02:27:00.682Z",
+  "updatedAt": "2019-04-01T03:41:28.574Z",
   "devdoc": {
     "methods": {}
   },
