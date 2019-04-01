@@ -5929,15 +5929,15 @@
     "version": "0.5.1+commit.c8a2cb62.Linux.g++"
   },
   "networks": {
-    "1554085071873": {
+    "1554089189422": {
       "events": {},
       "links": {},
-      "address": "0x4E21723C25fcd9c3B62B8cEF074d6aBB9231E521",
-      "transactionHash": "0x1ed056a267e9f37dee364370fb1387905269da125c3a8600176c5477d7687dba"
+      "address": "0xAEe7FdaDAAc80b174e2829879365A400222D3bC4",
+      "transactionHash": "0xda4f29182b7c33dc492de8b5607801d99edefcefdc1c6b1eb7919e7e9a005ed1"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-04-01T02:27:00.483Z",
+  "updatedAt": "2019-04-01T03:41:28.417Z",
   "devdoc": {
     "methods": {}
   },

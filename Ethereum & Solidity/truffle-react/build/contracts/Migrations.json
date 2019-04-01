@@ -1378,21 +1378,15 @@
     "version": "0.5.1+commit.c8a2cb62.Linux.g++"
   },
   "networks": {
-    "1554084729534": {
+    "1554089189422": {
       "events": {},
       "links": {},
-      "address": "0x13892ef2cc1482cEb61ad8471173C202707D4381",
-      "transactionHash": "0xee760c3e8afc2d4618bd54e1e06abc8fef638012806b606438ebe4d704ddbf19"
-    },
-    "1554085071873": {
-      "events": {},
-      "links": {},
-      "address": "0x9E44a7F8a3182F9308E05211b0221a634086130E",
-      "transactionHash": "0x1b0451d701dba5fd9fade4bc796eb27a40db455a5aa55c031e31fbcf61dab72b"
+      "address": "0x4DbF64C4240512ACE1dcA6195dd2787AD573b01A",
+      "transactionHash": "0x1c79e324c0f5e0cad6fa07a013d59d01ec32df15dcb3a6be2b3e502fa3c710e0"
     }
   },
   "schemaVersion": "3.0.2",
-  "updatedAt": "2019-04-01T02:27:00.683Z",
+  "updatedAt": "2019-04-01T03:41:28.575Z",
   "devdoc": {
     "methods": {}
   },
