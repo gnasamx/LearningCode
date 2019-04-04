@@ -1,5 +1,6 @@
 const devConfig = {
-  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-dev'
+  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-dev',
+  JWt_SECRET: 'This$Is$Secret'
 }
 
 const testConfig = {
