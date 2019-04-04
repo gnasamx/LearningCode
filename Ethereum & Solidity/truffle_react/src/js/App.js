@@ -6,6 +6,9 @@ import TruffleContract from 'truffle-contract'
 // import Content from './Content'
 import 'bootstrap/dist/css/bootstrap.css'
 import CampaignFactory from '../../build/contracts/CampaignFactory'
+import Navbar from './components/Navbar'
+import CampaignFactoryTitle from './components/CampaignFactoryTitle'
+import Modal from './components/Modal'
 
 class App extends React.Component {
   constructor(props) {
@@ -90,47 +93,45 @@ class App extends React.Component {
   //   )
   // }
 
-  createNewCampaignHandler = () => {
-    console.log('creating new campaign')
-    this.campaignFactoryInstance
-      .createCampaign(10, { from: this.state.account })
-      .then(campaignFactory => {
-        console.log('New Campaign => ', campaignFactory)
-        this.setState({ campaignFactory })
-      })
+  createNewCampaignHandler = (minimumFund) => {
+    console.log('creating new campaign, minimumFund: ', minimumFund)
+    if (minimumFund >= 0) {
+      this.campaignFactoryInstance
+        .createCampaign(minimumFund, { from: this.state.account })
+        .then(campaignFactory => {
+          console.log('New Campaign => ', campaignFactory)
+          this.setState({ campaignFactory })
+        })
+    } else {
+      console.log('Enter minimum funding amount greater than 0')
+    }
   }
 
   getAllDeployedCampaigns = () => {
     console.log('Fetching all the campaigns')
     this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
       console.log(`All campaign ${allCampaigns}`)
-      // allCampaigns.map((campaign) => {
-      //   console.log(`Campaign: ${campaign.receipt.gasUsed}`)
-      // })
+      allCampaigns.map(campaign => {
+        console.log(`Campaign: ${campaign}`)
+      })
     })
   }
 
   render() {
     return (
-      <div className="row">
-        <div className="col-lg-12 text-center">
-          <h1>CrowdSF</h1>
-          <p>Your account address: {this.state.account}</p>
-          <p>CampaignFactory: {this.state.campaignFactoryAddress}</p>
-          <button
-            className="btn btn-success"
-            onClick={this.createNewCampaignHandler}
-          >
-            Create Campaign
-          </button>
-          <button
-            className="btn btn-warning ml-2"
-            onClick={this.getAllDeployedCampaigns}
-          >
-            Fetch All Campaigns
-          </button>
+      <React.Fragment>
+        <Navbar accountAddress={this.state.account} />
+        <Modal createNewCampaignHandler={this.createNewCampaignHandler} />
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <CampaignFactoryTitle
+                campaignFactoryAddress={this.state.campaignFactoryAddress}
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }
