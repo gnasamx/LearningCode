@@ -13,6 +13,7 @@ class App extends React.Component {
     this.state = {
       account: '0x0',
       loading: true,
+      campaignFactoryAddress: null
     }
 
     if (typeof web3 != 'undefined') {
@@ -33,6 +34,8 @@ class App extends React.Component {
 
     // this.castVote = this.castVote.bind(this)
     // this.watchEvents = this.watchEvents.bind(this)
+
+    this.createNewCampaignHandler = this.createNewCampaignHandler.bind(this)
   }
 
   componentDidMount() {
@@ -59,11 +62,12 @@ class App extends React.Component {
       //     this.setState({ hasVoted, loading: false })
       //   })
       // })
+      console.log('creating campaign factory')
       this.campaignFactory.deployed().then(campaignFactoryInstance => {
         this.campaignFactoryInstance = campaignFactoryInstance
         console.log('Okay => ', campaignFactoryInstance)
-        this.campaignFactoryInstance.createCampaign(10).then(campaign => {
-          console.log('New Campaign => ', campaign)
+        this.setState({
+          campaignFactoryAddress: campaignFactoryInstance.address
         })
       })
     })
@@ -86,12 +90,45 @@ class App extends React.Component {
   //   )
   // }
 
+  createNewCampaignHandler = () => {
+    console.log('creating new campaign')
+    this.campaignFactoryInstance
+      .createCampaign(10, { from: this.state.account })
+      .then(campaignFactory => {
+        console.log('New Campaign => ', campaignFactory)
+        this.setState({ campaignFactory })
+      })
+  }
+
+  getAllDeployedCampaigns = () => {
+    console.log('Fetching all the campaigns')
+    this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
+      console.log(`All campaign ${allCampaigns}`)
+      // allCampaigns.map((campaign) => {
+      //   console.log(`Campaign: ${campaign.receipt.gasUsed}`)
+      // })
+    })
+  }
+
   render() {
     return (
       <div className="row">
         <div className="col-lg-12 text-center">
-          <h1>Election Results</h1>
-          <p>{this.state.account}</p>
+          <h1>CrowdSF</h1>
+          <p>Your account address: {this.state.account}</p>
+          <p>CampaignFactory: {this.state.campaignFactoryAddress}</p>
+          <button
+            className="btn btn-success"
+            onClick={this.createNewCampaignHandler}
+          >
+            Create Campaign
+          </button>
+          <button
+            className="btn btn-warning ml-2"
+            onClick={this.getAllDeployedCampaigns}
+          >
+            Fetch All Campaigns
+          </button>
         </div>
       </div>
     )
