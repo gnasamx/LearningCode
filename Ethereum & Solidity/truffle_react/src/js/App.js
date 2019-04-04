@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import CampaignFactory from '../../build/contracts/CampaignFactory'
 import Navbar from './components/Navbar'
 import CampaignFactoryTitle from './components/CampaignFactoryTitle'
+import Campaign from '../../build/contracts/Campaign'
 import Modal from './components/Modal'
 
 class App extends React.Component {
@@ -34,6 +35,9 @@ class App extends React.Component {
 
     this.campaignFactory = TruffleContract(CampaignFactory)
     this.campaignFactory.setProvider(this.web3Provider)
+
+    this.campaign = TruffleContract(Campaign)
+    this.campaign.setProvider(this.web3Provider)
 
     // this.castVote = this.castVote.bind(this)
     // this.watchEvents = this.watchEvents.bind(this)
@@ -68,10 +72,11 @@ class App extends React.Component {
       console.log('creating campaign factory')
       this.campaignFactory.deployed().then(campaignFactoryInstance => {
         this.campaignFactoryInstance = campaignFactoryInstance
-        console.log('Okay => ', campaignFactoryInstance)
+        console.log('CampaignFactoryInstance => ', campaignFactoryInstance)
         this.setState({
           campaignFactoryAddress: campaignFactoryInstance.address
         })
+        this.getAllDeployedCampaigns()
       })
     })
   }
@@ -93,11 +98,39 @@ class App extends React.Component {
   //   )
   // }
 
-  createNewCampaignHandler = (minimumFund) => {
-    console.log('creating new campaign, minimumFund: ', minimumFund)
-    if (minimumFund >= 0) {
+  getAllDeployedCampaigns = () => {
+    let allCampaignsArr = []
+    console.log('Fetching all the campaigns')
+    this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
+      // console.log(`All campaign ${allCampaigns}`)
+      allCampaigns.map(camp => {
+        // console.log(`Campaign: ${camp}`)
+        // console.log('this.campaign.at(camp); ', this.campaign.at(camp))
+        this.campaign.at(camp).then(campaignInstance => {
+          // console.log(campaignInstance)
+          allCampaignsArr.push(campaignInstance)
+        })
+      })
+    })
+
+    console.log('Array', allCampaignsArr)
+    allCampaignsArr.map(function(a){
+      console.log(a)
+    })
+  }
+
+  createNewCampaignHandler = (title, description, minimumFund) => {
+    console.log(
+      'creating new campaign, minimumFund: ',
+      title,
+      description,
+      minimumFund
+    )
+    if (title && description && minimumFund >= 0) {
       this.campaignFactoryInstance
-        .createCampaign(minimumFund, { from: this.state.account })
+        .createCampaign(title, description, minimumFund, {
+          from: this.state.account
+        })
         .then(campaignFactory => {
           console.log('New Campaign => ', campaignFactory)
           this.setState({ campaignFactory })
@@ -105,16 +138,6 @@ class App extends React.Component {
     } else {
       console.log('Enter minimum funding amount greater than 0')
     }
-  }
-
-  getAllDeployedCampaigns = () => {
-    console.log('Fetching all the campaigns')
-    this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
-      console.log(`All campaign ${allCampaigns}`)
-      allCampaigns.map(campaign => {
-        console.log(`Campaign: ${campaign}`)
-      })
-    })
   }
 
   render() {

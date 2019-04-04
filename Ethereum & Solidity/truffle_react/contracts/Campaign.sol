@@ -15,13 +15,17 @@ contract Campaign {
     uint public minimumContribution;
     mapping(address => bool) public approvers;
     uint public approversCount;
+    string campaignTitle;
+    string public campaignDescription;
 
     modifier restricted() {
         require(msg.sender == manager);
         _;
     }
 
-    constructor(uint minimum, address creator) public {
+    constructor(string memory campaignTitle,  string memory campaignDescription, uint minimum, address creator) public {
+        campaignTitle = campaignTitle;
+        campaignDescription = campaignDescription;
         manager = creator;
         minimumContribution = minimum;
     }
@@ -65,10 +69,12 @@ contract Campaign {
         request.complete = true;
     }
 
-    function getSummary() public view returns (
+    function getSummary() public view returns (string memory, string memory, 
       uint, uint, uint, uint, address
       ) {
         return (
+          campaignTitle,
+          campaignDescription,
           minimumContribution,
           address(this).balance,
           requests.length,

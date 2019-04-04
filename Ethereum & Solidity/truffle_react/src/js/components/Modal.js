@@ -5,6 +5,7 @@ class Modal extends React.Component {
     super(props)
     this.state = {
       title: '',
+      description: '',
       minFund: 0
     }
   }
@@ -59,6 +60,20 @@ class Modal extends React.Component {
                   />
                 </div>
                 <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">
+                    Campaign Description
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    onChange={this.onChangeHandler}
+                    name="description"
+                    value={this.state.description}
+                    id="exampleInputEmail1"
+                    placeholder="Something more about this campaign"
+                  />
+                </div>
+                <div className="form-group">
                   <label htmlFor="exampleInputPassword1">
                     Campaign Minimum Funds(in ether)
                   </label>
@@ -94,7 +109,12 @@ class Modal extends React.Component {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={this.props.createNewCampaignHandler.bind(this, this.state.minFund)}
+                onClick={this.props.createNewCampaignHandler.bind(
+                  this,
+                  this.state.title,
+                  this.state.description,
+                  this.state.minFund
+                )}
               >
                 Create
               </button>
