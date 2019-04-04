@@ -28,7 +28,7 @@ const UserSchema = new Schema({
     required: [true, 'Last name is required!'],
     trim: true
   },
-  username: {
+  userName: {
     type: String,
     unique: true,
     trim: true,
@@ -69,13 +69,13 @@ UserSchema.methods = {
       {
         _id: this._id
       },
-      constants.JWT_SECRET
+      'secret'
     )
   },
   toJSON() {
     return {
       _id: this._id,
-      userName: this.username,
+      userName: this.userName,
       token: `JWT ${this.createToken()}`
     }
   }
