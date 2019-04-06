@@ -12,7 +12,7 @@ const prodConfig = {
 }
 
 const defaultConfig = {
-  PORT: process.env.POST || 3000
+  PORT: process.env.POST || 8000
 }
 
 function envConfig(env) {

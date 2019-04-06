@@ -95,7 +95,7 @@ module.exports =
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nconst devConfig = {\n  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-dev',\n  JWt_SECRET: 'This$Is$Secret'\n};\nconst testConfig = {\n  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-test'\n};\nconst prodConfig = {\n  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-prod'\n};\nconst defaultConfig = {\n  PORT: process.env.POST || 3000\n};\n\nfunction envConfig(env) {\n  switch (env) {\n    case 'development':\n      return devConfig;\n\n    case 'test':\n      return testConfig;\n\n    case 'production':\n      return prodConfig;\n  }\n}\n\nexports.default = { ...defaultConfig,\n  ...envConfig(\"development\")\n};\n\n//# sourceURL=webpack:///./src/config/constants.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nconst devConfig = {\n  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-dev',\n  JWt_SECRET: 'This$Is$Secret'\n};\nconst testConfig = {\n  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-test'\n};\nconst prodConfig = {\n  MONGO_URL: 'mongodb://localhost/nodejs-mongodb-prod'\n};\nconst defaultConfig = {\n  PORT: process.env.POST || 8000\n};\n\nfunction envConfig(env) {\n  switch (env) {\n    case 'development':\n      return devConfig;\n\n    case 'test':\n      return testConfig;\n\n    case 'production':\n      return prodConfig;\n  }\n}\n\nexports.default = { ...defaultConfig,\n  ...envConfig(\"development\")\n};\n\n//# sourceURL=webpack:///./src/config/constants.js?");
 
 /***/ }),
 
@@ -143,7 +143,43 @@ eval("\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _user = __webpack_require__(/*! ./users/user.routes */ \"./src/modules/users/user.routes.js\");\n\nvar _user2 = _interopRequireDefault(_user);\n\nvar _auth = __webpack_require__(/*! ../services/auth.services */ \"./src/services/auth.services.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = app => {\n  app.use('/api/v1/users', _user2.default);\n  app.get('/hello', _auth.authJwt, (req, res) => {\n    res.send('This is a private route');\n  });\n};\n\n//# sourceURL=webpack:///./src/modules/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _user = __webpack_require__(/*! ./users/user.routes */ \"./src/modules/users/user.routes.js\");\n\nvar _user2 = _interopRequireDefault(_user);\n\nvar _product = __webpack_require__(/*! ./products/product.routes */ \"./src/modules/products/product.routes.js\");\n\nvar _product2 = _interopRequireDefault(_product);\n\nvar _auth = __webpack_require__(/*! ../services/auth.services */ \"./src/services/auth.services.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = app => {\n  app.use('/api/v1/users', _user2.default);\n  app.get('/hello', _auth.authJwt, (req, res) => {\n    res.send('This is a private route');\n  });\n  app.use('/api/v1/products', _product2.default);\n};\n\n//# sourceURL=webpack:///./src/modules/index.js?");
+
+/***/ }),
+
+/***/ "./src/modules/products/product.controller.js":
+/*!****************************************************!*\
+  !*** ./src/modules/products/product.controller.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.addProduct = addProduct;\nexports.fetchAllProducts = fetchAllProducts;\n\nvar _product = __webpack_require__(/*! ./product.model */ \"./src/modules/products/product.model.js\");\n\nvar _product2 = _interopRequireDefault(_product);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nasync function addProduct(req, res) {\n  try {\n    const product = await _product2.default.create(req.body);\n    return res.status(201).json({\n      product: product,\n      message: 'Product added'\n    });\n  } catch (error) {\n    return res.status(error.status).json({\n      error: error,\n      message: 'Failed to add product'\n    });\n  }\n}\n\nasync function fetchAllProducts(req, res) {\n  try {\n    return res.status(200).json({\n      products: await _product2.default.find({})\n    });\n  } catch (error) {\n    return res.status(error.status).json({\n      error: error,\n      message: 'Failed to fetch all products'\n    });\n  }\n}\n\n//# sourceURL=webpack:///./src/modules/products/product.controller.js?");
+
+/***/ }),
+
+/***/ "./src/modules/products/product.model.js":
+/*!***********************************************!*\
+  !*** ./src/modules/products/product.model.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\n\nvar _mongoose2 = _interopRequireDefault(_mongoose);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst ProductSchema = new _mongoose.Schema({\n  name: {\n    type: String,\n    required: [true, 'Product name is required'],\n    trim: true\n  },\n  details: {\n    type: String,\n    required: [true, 'Product description is required'],\n    trim: true\n  },\n  price: {\n    type: Number,\n    required: ['Product cost is required!'],\n    trim: true\n  }\n});\nexports.default = _mongoose2.default.model('Product', ProductSchema);\n\n//# sourceURL=webpack:///./src/modules/products/product.model.js?");
+
+/***/ }),
+
+/***/ "./src/modules/products/product.routes.js":
+/*!************************************************!*\
+  !*** ./src/modules/products/product.routes.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar _product = __webpack_require__(/*! ./product.controller */ \"./src/modules/products/product.controller.js\");\n\nvar productController = _interopRequireWildcard(_product);\n\nfunction _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }\n\nconst routes = new _express.Router();\nroutes.post('/create', productController.addProduct);\nroutes.get('', productController.fetchAllProducts);\nexports.default = routes;\n\n//# sourceURL=webpack:///./src/modules/products/product.routes.js?");
 
 /***/ }),
 
