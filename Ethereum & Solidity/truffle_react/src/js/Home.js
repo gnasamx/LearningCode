@@ -12,7 +12,6 @@ import Campaign from '../../build/contracts/Campaign'
 import Modal from './components/Modal'
 import SingleCampaign from './components/SingleCampaign'
 
-
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -27,7 +26,7 @@ class Home extends React.Component {
       this.web3Provider = web3.currentProvider
     } else {
       this.web3Provider = new Web3.providers.HttpProvider(
-        'http://localhost:8545'
+        'http://127.0.0.1:8545'
       )
     }
 
@@ -72,7 +71,7 @@ class Home extends React.Component {
       //     this.setState({ hasVoted, loading: false })
       //   })
       // })
-      // console.log('creating campaign factory')
+      console.log('Creating campaign factory')
       this.campaignFactory.deployed().then(campaignFactoryInstance => {
         this.campaignFactoryInstance = campaignFactoryInstance
         // console.log('CampaignFactoryInstance => ', campaignFactoryInstance)
@@ -103,7 +102,7 @@ class Home extends React.Component {
 
   getAllDeployedCampaigns = () => {
     let allCampaignsArr = []
-    // console.log('Fetching all the campaigns')
+    console.log('Fetching all the campaigns')
     this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
       // console.log(`All campaign ${allCampaigns}`)
       allCampaigns.map(camp => {
@@ -124,7 +123,9 @@ class Home extends React.Component {
     if (title && description && minimumFund >= 0) {
       this.campaignFactoryInstance
         .createCampaign(title, description, minimumFund, {
-          from: this.state.account
+          from: this.state.account,
+          gas: 4712388,
+          gasPrice: 100000000000
         })
         .then(campaignFactory => {
           // console.log('New Campaign => ', campaignFactory)
