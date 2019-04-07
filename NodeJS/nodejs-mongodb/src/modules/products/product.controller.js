@@ -1,8 +1,19 @@
 import Product from './product.model'
+import mongoose from 'mongoose'
 
 export async function addProduct(req, res) {
   try {
-    const product = await Product.create(req.body)
+
+    const product = new Product({
+      _id: new mongoose.Types.ObjectId(),
+      name: req.body.name,
+      details: req.body.details,
+      price: req.body.price,
+      image: req.file.path
+    })
+
+    await product.save();
+
     return res.status(201).json({
       product: product,
       message: 'Product added'

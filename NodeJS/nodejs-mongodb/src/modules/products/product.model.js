@@ -13,9 +13,10 @@ const ProductSchema = new Schema({
   },
   price: {
     type: Number,
-    required: ['Product cost is required!'],
+    required: ['Product cost is required'],
     trim: true
-  }
+  },
+  image: { type: String, required: [true, 'Product image is required'] }
 })
 
 export default mongoose.model('Product', ProductSchema)
