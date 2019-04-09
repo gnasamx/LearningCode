@@ -53,3 +53,33 @@ export async function getProductById(req, res) {
       .json({ error: error, message: 'Failed to populate given product id' })
   }
 }
+
+export async function updateProduct(req, res) {
+  try {
+    const updateSingleProduct = await Product.findById(req.params.id)
+    if (updateSingleProduct) {
+      Object.keys(req.body).forEach(key => {
+        updateSingleProduct[key] = req.body[key]
+      })
+      return res.status(200).json(await updateSingleProduct.save())
+    }
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ error: error, message: 'Failed to update product' })
+  }
+}
+
+export async function deleteProduct(req, res) {
+  try {
+    const deleteSingleProduct = await Product.findById(req.params.id)
+    if (deleteSingleProduct) {
+      deleteSingleProduct.remove()
+      return res.status(200).json({ message: 'Product deleted' })
+    }
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ error: error, message: 'Failed to delete product' })
+  }
+}

@@ -46,4 +46,8 @@ routes.get('', productController.fetchAllProducts)
 
 routes.get('/:id', productController.getProductById)
 
+routes.patch('/update/:id', productController.updateProduct)
+
+routes.delete('/delete/:id', productController.deleteProduct)
+
 export default routes
