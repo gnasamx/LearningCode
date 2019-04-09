@@ -1,5 +1,6 @@
 import userRoutes from './users/user.routes'
 import productRoutes from './products/product.routes'
+import cartRoutes from './carts/cart.routes'
 import { authJwt } from '../services/auth.services'
 
 export default app => {
@@ -13,6 +14,9 @@ export default app => {
 
   // Add product (by Admin) route
   app.use('/api/v1/products', productRoutes)
+
+  // Add product to cart
+  app.use('/api/v1/cart', cartRoutes)
 
   // Handles error route
   app.use((req, res, next) => {

@@ -20,7 +20,7 @@ export async function addProduct(req, res) {
   } catch (error) {
     return res
       .status(error.status)
-      .json({ error: error, message: 'Failed to add product' })
+      .json({ error: error, message: 'Failed to add product into database' })
   }
 }
 
@@ -32,7 +32,10 @@ export async function fetchAllProducts(req, res) {
   } catch (error) {
     return res
       .status(error.status)
-      .json({ error: error, message: 'Failed to fetch all products' })
+      .json({
+        error: error,
+        message: 'Failed to fetch all products from database'
+      })
   }
 }
 
