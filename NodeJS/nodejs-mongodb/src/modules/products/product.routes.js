@@ -44,4 +44,6 @@ routes.post(
 )
 routes.get('', productController.fetchAllProducts)
 
+routes.get('/:id', productController.getProductById)
+
 export default routes
