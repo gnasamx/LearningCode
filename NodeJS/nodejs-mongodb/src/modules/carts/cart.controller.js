@@ -27,12 +27,14 @@ export async function addProductToCart(req, res) {
 export async function updateCartProduct(req, res) {
   try {
     const isProductAlreadyInCart = await Cart.findById(req.params.id)
+    const product = await Product.findById(req.params.id)
     console.log(isProductAlreadyInCart)
     if (isProductAlreadyInCart) {
       Object.keys(req.body).forEach(key => {
         console.log(req.body)
         isProductAlreadyInCart[key] = req.body[key]
       })
+      isProductAlreadyInCart['price'] = req.body.quantity * product['price']
       console.log(`final isProductAlreadyInCart ${isProductAlreadyInCart}`)
       await isProductAlreadyInCart.save()
       res.status(201).json({
