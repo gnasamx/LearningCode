@@ -1,11 +1,26 @@
-.sing-up {
+.sign-up {
   padding-top: 0;
   background: #fff;
   color: #222326;
   min-width: 320px;
   position: relative;
 }
+/* Header */
+.l-signup-header {
+  background: #fff;
+}
 
+.sign-up .shop-logo {
+  width: 197px;
+  height: 59px;
+  background: url('https://www.scdn.co/i/_global/logos/spotify-logo-lockup-197@2x.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Body */
 .l-signup-body {
   border-top: 1px solid #dfe0e6;
 }
@@ -21,14 +36,125 @@
   max-width: 26.875em;
 }
 
+/* Signup using google */
+
+.layout-signup .signup-select {
+  display: block !important;
+  margin-bottom: 8px;
+}
+
+.layout-signup .page-signup .sign-up .signup-select .content {
+  padding: 1.9em 0 0 0;
+  /* text-align: center; */
+}
+
+button {
+  margin: 0 auto;
+  display: block;
+}
+
+/* Google button */
+.btn {
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  border: 1px solid transparent;
+  user-select: none;
+  border-radius: 500px;
+  padding: 16px 48px 18px;
+  transition-property: background-color, border-color, color, box-shadow, filter,
+    -webkit-box-shadow, -webkit-filter;
+  transition-duration: 0.3s;
+  border-width: 0;
+  min-width: 160px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  word-spacing: normal;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.layout-signup .page-signup .sign-up .btn {
+  margin-bottom: 14px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-google {
+  color: #fff;
+  background-color: #4285f4;
+}
+
+.btn-green {
+  background-color: #1db954;
+  color: #fff;
+}
+
+/* Or */
+
+.sign-up .content > :last-child {
+  margin-bottom: 0;
+}
+
+.sign-up .line-thru::before {
+  width: 40px;
+  height: 10px;
+  background-color: #fff;
+  content: '';
+  margin: -5px 0 0 -20px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  z-index: -1;
+}
+
+.sign-up .line-thru::after {
+  border-bottom: 1px solid #dfe0e6;
+  content: '';
+  display: block;
+  position: absolute;
+  top: 49%;
+  width: 100%;
+  z-index: -2;
+}
+
+.sign-up .line-thru {
+  display: block;
+  font-size: 0.875em;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  font-family: inherit;
+  z-index: 1;
+}
+
+strong {
+  font-weight: 500;
+}
+
+/* Register */
 .register {
   display: block;
   border-radius: 5px 5px 0 0;
 }
 
-.content {
+section .register .content {
+  padding-top: 0px;
+}
+
+.layout-signup .content {
   border-top: none;
-  padding: 0;
+}
+
+.layout-signup .page-signup .sign-up .register .content {
+  background-color: #fff;
+  padding: 0 0 1.9em 0;
 }
 
 .singup h2 {
@@ -41,9 +167,9 @@
 }
 
 h2 {
-  font-weight: 900;
+  font-weight: 00;
   line-height: 1.2;
-  margin: 0 0 0.5em;
+  margin: 0 0 1em;
   text-rendering: optimizeLegibility;
 }
 
@@ -55,27 +181,78 @@ h2 {
   position: relative;
 }
 
-/* fieldset {
+fieldset {
   border: 0;
   padding: 0;
   margin: 0 2px;
-} */
+}
 
- ul {
+ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
- li {
+li {
   margin-bottom: 1em;
   display: block;
   text-align: left;
 }
 
+/* Terms and conditions */
+.sign-up .li-terms-notice {
+  text-align: center;
+}
+
+.sign-up fieldset li:last-child {
+  margin-bottom: 1em;
+}
+
+.sign-up .notice {
+  font-size: 0.75em;
+  margin: 0 0 1em;
+}
+
+a {
+  color: #1db954;
+  list-style: none;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+/* Login link */
+.sign-up .primary {
+  font-size: 0.9375em;
+  display: block;
+  font-weight: 500;
+  margin: 0 0 1em;
+  text-align: center;
+}
+
 /* For container */
+@media only screen and (min-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
+}
+
 @media only screen and (min-width: 992px) {
   .container {
     max-width: 970px;
+  }
+}
+
+/* For header */
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 750px;
+  }
+  .l-signup-header {
+    padding: 1.5em 0;
+  }
+
+  .sign-up .shop-logo {
+    width: 197px;
+    height: 59px;
   }
 }
