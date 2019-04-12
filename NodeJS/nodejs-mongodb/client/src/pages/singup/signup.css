@@ -1,0 +1,81 @@
+.sing-up {
+  padding-top: 0;
+  background: #fff;
+  color: #222326;
+  min-width: 320px;
+  position: relative;
+}
+
+.l-signup-body {
+  border-top: 1px solid #dfe0e6;
+}
+
+.container {
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.l-box-content {
+  margin: 0 auto;
+  max-width: 26.875em;
+}
+
+.register {
+  display: block;
+  border-radius: 5px 5px 0 0;
+}
+
+.content {
+  border-top: none;
+  padding: 0;
+}
+
+.singup h2 {
+  color: #1c1c1f;
+  margin-bottom: 1em;
+}
+
+.hdr-l {
+  font-size: 18px;
+}
+
+h2 {
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+  text-rendering: optimizeLegibility;
+}
+
+.center {
+  text-align: center;
+}
+
+.sign-up form {
+  position: relative;
+}
+
+/* fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 2px;
+} */
+
+ ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ li {
+  margin-bottom: 1em;
+  display: block;
+  text-align: left;
+}
+
+/* For container */
+@media only screen and (min-width: 992px) {
+  .container {
+    max-width: 970px;
+  }
+}
