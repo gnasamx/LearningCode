@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Input } from '../../atoms/input/Input'
-import './signup.css'
+import './login.css'
 
-class Signup extends Component {
-
+class Login extends Component {
   render() {
     return (
       <div className="layout-signup">
@@ -25,8 +24,11 @@ class Signup extends Component {
                   <section className="signup-select">
                     <form>
                       <div className="content">
+                        <h2 className="center hdr-l">
+                          To continue, log in to Shop.
+                        </h2>
                         <button className="btn btn-google btn-block">
-                          Sign up with google
+                          Log in with google
                         </button>
                         <strong className="line-thru">or</strong>
                       </div>
@@ -34,9 +36,6 @@ class Signup extends Component {
                   </section>
                   <section className="register">
                     <div className="content">
-                      <h2 className="center hdr-l">
-                        Sign up with your email address
-                      </h2>
                       <form>
                         <fieldset>
                           <ul>
@@ -46,35 +45,35 @@ class Signup extends Component {
                             <li>
                               <Input placeholder="Password" type="password" />
                             </li>
-                            <li>
-                              <Input
-                                placeholder="What should we call you?"
-                                type="text"
-                              />
-                            </li>
                             <li className="li-terms-notice">
                               <p className="notice">
-                                By clicking on Sign up, you agree to Shop's
-                                &nbsp;
+                                If you click "Log in with Google" and are not a
+                                Shop's user, you will be registered and you
+                                agree to Shop's &nbsp;
                                 <Link to="/signup">
-                                  Terms and Conditions of Use
+                                  Terms and Conditions
                                 </Link>
-                                . <br />
-                                <br />
-                                To learn more about how Shop collects, uses,
-                                shares and protects your personal data please
-                                read Shop's &nbsp;
+                                and &nbsp;
                                 <Link to="/signup">Privacy Policy</Link>.
                               </p>
                             </li>
                           </ul>
                         </fieldset>
-                        <button className="btn btn-green btn-block">Sign Up</button>
+                        <button className="btn btn-green btn-block">
+                          Log in
+                        </button>
                       </form>
-                      <p className="primary">Already have an account?&nbsp; 
-                      <Link to="/login">Log in</Link>
+                      <p className="primary">
+                        <Link to="/login">Forget your password?</Link>
                       </p>
                     </div>
+                  </section>
+                  <section>
+                    <div className="divider" />
+                    <h2 className="center hdr-l">Don't have an account.</h2>
+                    <button className="btn btn-block btn-default">
+                      Sign up for Shop
+                    </button>
                   </section>
                 </div>
               </div>
@@ -86,4 +85,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup
+export default Login
