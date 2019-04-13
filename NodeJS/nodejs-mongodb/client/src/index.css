@@ -53,18 +53,10 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  line-height: 1.5;
+  /* margin: 0; */
+  /* padding: 0; */
+  /* line-height: 1.5; */
   font-family: 'Cereal';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
+  /* -webkit-font-smoothing: antialiased; */
+  /* -moz-osx-font-smoothing: grayscale; */
 }
-
-/* .container {
-  width: 1170px;
-  margin: 0 auto;
-  padding-left: 15px;
-  padding-right: 15px;
-} */
