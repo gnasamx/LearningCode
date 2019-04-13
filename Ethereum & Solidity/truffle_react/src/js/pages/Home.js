@@ -105,18 +105,20 @@ class Home extends React.Component {
       let allCampaignsArr = []
       console.log('Fetching all the campaigns')
       this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
-        console.log(`All campaign ${allCampaigns}`)
-        allCampaigns.map(camp => {
-          console.log(`Campaign: ${camp}`)
-          // console.log('this.campaign.at(camp); ', this.campaign.at(camp))
-          this.campaign.at(camp).then(campaignInstance => {
-            // console.log(campaignInstance)
-            allCampaignsArr.push(campaignInstance.address)
-            // SetState the retrieve campaigns from blockchain
-            this.setState({ campaignsFromBlockchain: allCampaignsArr })
-            // console.log(this.state)
+        if (allCampaigns !== undefined) {
+          console.log(`All campaign ${allCampaigns}`)
+          allCampaigns.map(camp => {
+            // console.log(`Campaign: ${camp}`)
+            // console.log('this.campaign.at(camp); ', this.campaign.at(camp))
+            this.campaign.at(camp).then(campaignInstance => {
+              // console.log(campaignInstance)
+              allCampaignsArr.push(campaignInstance.address)
+              // SetState the retrieve campaigns from blockchain
+              this.setState({ campaignsFromBlockchain: allCampaignsArr })
+              // console.log(this.state)
+            })
           })
-        })
+        }
       })
     } catch (error) {
       console.log(`Unable to get the all campaigns from blockchain. ${error}`)

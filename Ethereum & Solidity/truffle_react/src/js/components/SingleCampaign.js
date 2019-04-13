@@ -2,24 +2,12 @@ import React from 'react'
 import Campaign from '../../../build/contracts/Campaign'
 import { Link } from 'react-router-dom'
 
-// const singleCampFunction = props => (
-//   <div className="card" style="width: 18rem;">
-//     <div className="card-body">
-//       <h5 className="card-title">{props}</h5>
-//       <h6 className="card-subtitle mb-2 text-muted">Campaign</h6>
-//       <p className="card-text">
-//         Some quick example text to build on the card title and make up the bulk
-//         of the card's content.
-//       </p>
-//     </div>
-//   </div>
-// )
-
 class SingleCampaign extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      allCampaigns: []
+      allCampaigns: [],
+      creator: '0x0'
     }
 
     if (typeof web3 != 'undefined') {
@@ -40,13 +28,14 @@ class SingleCampaign extends React.Component {
   }
 
   listOnClickHandler = campAdd => {
-    console.log(` Campaign address ${campAdd}`)
-    console.log(`Account : ${this.account}`)
+    // console.log(` Campaign address ${campAdd}`)
+    // console.log(`Account : ${this.account}`)
 
     this.campaign.at(campAdd).then(campaignInstance => {
       // Manager address of this campaign
       campaignInstance.manager().then(oo => {
         console.log(`Manager: => ${oo}`)
+        // this.setState({creator: oo})
       })
 
       // Contribute to the campaign
@@ -105,7 +94,7 @@ class SingleCampaign extends React.Component {
   }
 
   render() {
-    console.log(`Inside SingleComponent ${this.props.campaignsFromBlockchain}`)
+    // console.log(`Inside SingleComponent ${this.props.campaignsFromBlockchain}`)
     const campaignList = this.props.campaignsFromBlockchain.map(
       (cfbcAddress, i) => (
         <li
