@@ -2,15 +2,14 @@ const path = require('path')
 module.exports = {
   entry: path.join(__dirname, 'src/js', 'App.js'),
   devServer: {
-    contentBase: path.join(__dirname, 'src')
+    contentBase: path.join(__dirname, 'src'),
+    historyApiFallback: true
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'build.js'
+    filename: 'build.js',
+    publicPath: '/'
   },
-  // devServer: {
-  //   historyApiFallback: true
-  // },
   module: {
     rules: [
       {

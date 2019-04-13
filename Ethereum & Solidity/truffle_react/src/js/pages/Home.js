@@ -5,12 +5,12 @@ import TruffleContract from 'truffle-contract'
 // import Election from '../../build/contracts/Election.json'
 // import Content from './Content'
 import 'bootstrap/dist/css/bootstrap.css'
-import CampaignFactory from '../../build/contracts/CampaignFactory'
-import Navbar from './components/Navbar'
-import CampaignFactoryTitle from './components/CampaignFactoryTitle'
-import Campaign from '../../build/contracts/Campaign'
-import Modal from './components/Modal'
-import SingleCampaign from './components/SingleCampaign'
+import CampaignFactory from '../../../build/contracts/CampaignFactory.json'
+import Navbar from '../components/Navbar'
+import CampaignFactoryTitle from '../components/CampaignFactoryTitle'
+import Campaign from '../../../build/contracts/Campaign.json'
+import Modal from '../components/Modal'
+import SingleCampaign from '../components/SingleCampaign'
 
 class Home extends React.Component {
   constructor(props) {
@@ -101,38 +101,52 @@ class Home extends React.Component {
   // }
 
   getAllDeployedCampaigns = () => {
-    let allCampaignsArr = []
-    console.log('Fetching all the campaigns')
-    this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
-      // console.log(`All campaign ${allCampaigns}`)
-      allCampaigns.map(camp => {
-        // console.log(`Campaign: ${camp}`)
-        // console.log('this.campaign.at(camp); ', this.campaign.at(camp))
-        this.campaign.at(camp).then(campaignInstance => {
-          // console.log(campaignInstance)
-          allCampaignsArr.push(campaignInstance.address)
-          // SetState the retrieve campaigns from blockchain
-          this.setState({ campaignsFromBlockchain: allCampaignsArr })
-          // console.log(this.state)
+    try {
+      let allCampaignsArr = []
+      console.log('Fetching all the campaigns')
+      this.campaignFactoryInstance.getDeployedCampaigns().then(allCampaigns => {
+        console.log(`All campaign ${allCampaigns}`)
+        allCampaigns.map(camp => {
+          console.log(`Campaign: ${camp}`)
+          // console.log('this.campaign.at(camp); ', this.campaign.at(camp))
+          this.campaign.at(camp).then(campaignInstance => {
+            // console.log(campaignInstance)
+            allCampaignsArr.push(campaignInstance.address)
+            // SetState the retrieve campaigns from blockchain
+            this.setState({ campaignsFromBlockchain: allCampaignsArr })
+            // console.log(this.state)
+          })
         })
       })
-    })
+    } catch (error) {
+      console.log(`Unable to get the all campaigns from blockchain. ${error}`)
+    }
   }
 
   createNewCampaignHandler = (title, description, minimumFund) => {
-    if (title && description && minimumFund >= 0) {
-      this.campaignFactoryInstance
-        .createCampaign(title, description, minimumFund, {
-          from: this.state.account,
-          gas: 4712388,
-          gasPrice: 100000000000
-        })
-        .then(campaignFactory => {
-          // console.log('New Campaign => ', campaignFactory)
-          this.setState({ campaignFactory })
-        })
-    } else {
-      console.log('Enter minimum funding amount greater than 0')
+    try {
+      if (title && description && minimumFund >= 0) {
+        this.campaignFactoryInstance
+          .createCampaign(title, description, minimumFund, {
+            from: this.state.account,
+            gas: 4712388,
+            gasPrice: 100000000000
+          })
+          .then(campaignFactory => {
+            // console.log(
+            //   'Adding the newly created campaign in state => ',
+            //   campaignFactory.address
+            // )
+            // this.setState({ campaignsFromBlockchain: campaignFactory.address })
+            console.log(
+              `New campaign created with address - ${campaignFactory}`
+            )
+          })
+      } else {
+        console.log('Enter minimum funding amount greater than 0')
+      }
+    } catch (error) {
+      console.log(`Something went wrong while creating new campaign ${error}`)
     }
   }
 

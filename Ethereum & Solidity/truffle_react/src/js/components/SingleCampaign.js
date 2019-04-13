@@ -1,5 +1,6 @@
 import React from 'react'
 import Campaign from '../../../build/contracts/Campaign'
+import { Link } from 'react-router-dom'
 
 // const singleCampFunction = props => (
 //   <div className="card" style="width: 18rem;">
@@ -17,6 +18,9 @@ import Campaign from '../../../build/contracts/Campaign'
 class SingleCampaign extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      allCampaigns: []
+    }
 
     if (typeof web3 != 'undefined') {
       this.web3Provider = web3.currentProvider
@@ -41,9 +45,9 @@ class SingleCampaign extends React.Component {
 
     this.campaign.at(campAdd).then(campaignInstance => {
       // Manager address of this campaign
-      // campaignInstance.manager().then(oo => {
-      //   console.log(`Manager: => ${oo}`)
-      // })
+      campaignInstance.manager().then(oo => {
+        console.log(`Manager: => ${oo}`)
+      })
 
       // Contribute to the campaign
       // Convert eth to wei => web3.toWei(15, 'ether'),
@@ -101,15 +105,29 @@ class SingleCampaign extends React.Component {
   }
 
   render() {
+    console.log(`Inside SingleComponent ${this.props.campaignsFromBlockchain}`)
     const campaignList = this.props.campaignsFromBlockchain.map(
       (cfbcAddress, i) => (
-        <li key={i} onClick={() => this.listOnClickHandler(cfbcAddress)}>
-          {cfbcAddress}
+        <li
+          key={i}
+          onClick={() => this.listOnClickHandler(cfbcAddress)}
+          style={{ listStyle: 'none' }}
+        >
+          <Link to={`/${cfbcAddress}`} style={{ textDecoration: 'none' }}>
+            <div className="card">
+              <div className="card-body">{cfbcAddress}</div>
+            </div>
+          </Link>
         </li>
       )
     )
 
-    return <ul>{campaignList}</ul>
+    return (
+      <React.Fragment>
+        <h6 className="m-3">All Campaigns</h6>
+        <ul style={{ margin: 0, padding: 0 }}>{campaignList}</ul>
+      </React.Fragment>
+    )
   }
 }
 
