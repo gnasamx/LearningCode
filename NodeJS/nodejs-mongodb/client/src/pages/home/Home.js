@@ -11,21 +11,19 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch('http:localhost:8000/api/v1/products', {
+    fetch('http://localhost:8000/api/v1/products/', {
+      method: 'GET',
       headers: {
-        Accept: 'text/plain',
-        'Content-Type': 'text/plain'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       }
     })
       .then(response => {
-        if (!response.ok) {
-          throw response
-        }
         return response.json()
       })
       .then(json => {
-        // this.props.dispatch(doSomethingWithResult(json))
-        console.log(json)
+        this.setState({ allProducts: json.products })
+        console.log(json.products)
       })
       .catch(err => {
         console.log(err)
@@ -33,8 +31,8 @@ class Home extends Component {
   }
 
   render() {
-    let renderProducts = this.state.allProducts.map(eachProduct => (
-      <ProductLook eachProduct={eachProduct} />
+    let renderProducts = this.state.allProducts.map((eachProduct, index) => (
+      <ProductLook key={eachProduct._id} eachProduct={eachProduct} />
     ))
     return (
       <div>

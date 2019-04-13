@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Input } from '../../atoms/input/Input'
-// import './login.css'
+import './login.css'
 
 class Login extends Component {
   render() {
