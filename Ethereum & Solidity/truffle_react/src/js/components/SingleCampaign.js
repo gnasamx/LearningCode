@@ -103,7 +103,7 @@ class SingleCampaign extends React.Component {
           style={{ listStyle: 'none' }}
         >
           <Link to={`/${cfbcAddress}`} style={{ textDecoration: 'none' }}>
-            <div className="card">
+            <div className="card mb-2">
               <div className="card-body">{cfbcAddress}</div>
             </div>
           </Link>

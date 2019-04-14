@@ -44,13 +44,17 @@ class Navbar extends React.Component {
           >
             Create Campaign
           </button>
-          <button
-            className="btn btn-outline-warning ml-2 my-sm-0"
-            type="submit"
-          >
-            {/* {this.props.accountAddress.slice(0, 5) + '...'} */}
-            {this.props.accountAddress}{' '}
-          </button>
+          <div>
+            {this.props.accountAddress && (
+              <button
+                className="btn btn-outline-warning ml-2 my-sm-0"
+                type="submit"
+              >
+                {/* {this.props.accountAddress.slice(0, 5) + '...'} */}
+                {this.props.accountAddress}{' '}
+              </button>
+            )}
+          </div>
         </div>
       </nav>
     )

@@ -1,12 +1,14 @@
 import React from 'react'
 
-const CampaignDetailsCard1 = () => {
+const CampaignDetailsCard1 = props => {
   return (
     <div className="card ">
+      <div className="card-header">Minimum Contribution</div>
       <div className="card-body">
-        <h5 className="card-title">Card title</h5>
+        <h5 className="card-title">{props.minContribution} eth</h5>
         <p className="card-text">
-          With supporting text below as a natural lead-in to additional content.
+          Each backers has to give minimum funds of {props.minContribution}{' '}
+          eth.
         </p>
       </div>
     </div>

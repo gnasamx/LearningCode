@@ -111,7 +111,7 @@ class Home extends React.Component {
             // console.log(`Campaign: ${camp}`)
             // console.log('this.campaign.at(camp); ', this.campaign.at(camp))
             this.campaign.at(camp).then(campaignInstance => {
-              // console.log(campaignInstance)
+              console.log(campaignInstance)
               allCampaignsArr.push(campaignInstance.address)
               // SetState the retrieve campaigns from blockchain
               this.setState({ campaignsFromBlockchain: allCampaignsArr })
@@ -135,13 +135,8 @@ class Home extends React.Component {
             gasPrice: 100000000000
           })
           .then(campaignFactory => {
-            // console.log(
-            //   'Adding the newly created campaign in state => ',
-            //   campaignFactory.address
-            // )
-            // this.setState({ campaignsFromBlockchain: campaignFactory.address })
             console.log(
-              `New campaign created with address - ${campaignFactory}`
+              `New campaign created with address - ${campaignFactory.address}`
             )
           })
       } else {
