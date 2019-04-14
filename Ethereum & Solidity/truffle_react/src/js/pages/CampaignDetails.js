@@ -7,6 +7,7 @@ import ContributionCard from '../components/ContributionCard'
 import ContributionForm from '../components/ContributionForm'
 import CreateRequestForm from '../components/CreateRequestForm'
 import AllRequestCard from '../components/AllRequestsCard'
+import ContributersList from '../components/ContributersList'
 
 class CampaignDetails extends React.Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class CampaignDetails extends React.Component {
       requestWorkerAdd: '0x0',
       requestEthAmt: 0,
       totalRequestsCount: 0,
-      totalRequestArr: []
+      totalRequestArr: [],
+      allContributersArr: []
     }
 
     if (typeof web3 != 'undefined') {
@@ -80,6 +82,11 @@ class CampaignDetails extends React.Component {
                 })
               }
             }
+          })
+          // Get all contributers
+          campaignInstance.getContributers().then(eachCont => {
+            console.log(eachCont)
+            this.setState({ allContributersArr: eachCont })
           })
         })
       } catch (error) {
@@ -152,12 +159,26 @@ class CampaignDetails extends React.Component {
           this.reRender()
         })
     } catch (error) {
-      console.log('Something went wrong while approving the request')
+      console.log('Something went wrong while approving the request', error)
     }
   }
 
   handleFinalize = index => {
     console.log(index)
+    try {
+      this.state.campaignInstance
+        .finalizeRequest(index, {
+          from: web3.eth.accounts.toString(),
+          gas: 4712388,
+          gasPrice: 100000000000
+        })
+        .then(fr => {
+          console.log(`Request finalize ${JSON.stringify(fr)}`)
+          this.reRender()
+        })
+    } catch (error) {
+      console.log('Something went wrong while finalizing the request', error)
+    }
   }
 
   createNewRequestHandler = e => {
@@ -192,7 +213,8 @@ class CampaignDetails extends React.Component {
       requestPurpose,
       requestWorkerAdd,
       requestEthAmt,
-      totalRequestArr
+      totalRequestArr,
+      allContributersArr
     } = this.state
 
     return (
@@ -249,6 +271,17 @@ class CampaignDetails extends React.Component {
             </div>
           </div>
 
+          <div className="rol mb-3">
+            <div className="card">
+              <div className="card-body">
+                <div className="card-title font-weight-bold">
+                  All Contributers
+                </div>
+                <ContributersList allContributersArr={allContributersArr} />
+              </div>
+            </div>
+          </div>
+
           {creator === web3.eth.accounts.toString() && (
             <div className="rol mb-3">
               <div className="card">
@@ -275,7 +308,9 @@ class CampaignDetails extends React.Component {
                   Request Details
                 </div>
                 <AllRequestCard
+                  creator={creator}
                   totalRequestArr={totalRequestArr}
+                  allContributersArr={allContributersArr}
                   handleApprove={this.handleApprove}
                   handleFinalize={this.handleFinalize}
                 />
@@ -285,18 +320,6 @@ class CampaignDetails extends React.Component {
         </div>
       </React.Fragment>
     )
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // console.log(prevProps, prevState)
-    // console.log('State creator  : ', this.state.creator)
-    // console.log('creator : ', prevState.creator)
-    // console.log('web3.eth.accounts : ', web3.eth.accounts.toString())
-    // if (prevState.creator !== web3.eth.accounts.toString()) {
-    //   console.log('TRUE , cdu')
-    // }
-    // console.log(this.state.campaignInstance)
-    // this.getAllRequests()
   }
 }
 export default CampaignDetails

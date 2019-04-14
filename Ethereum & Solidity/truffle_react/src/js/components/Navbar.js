@@ -8,7 +8,7 @@ class Navbar extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+      <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark mb-3">
         <Link className="navbar-brand" to="/">
           CrowdSF
         </Link>
