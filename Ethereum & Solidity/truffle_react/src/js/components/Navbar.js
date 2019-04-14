@@ -51,7 +51,7 @@ class Navbar extends React.Component {
                 type="submit"
               >
                 {/* {this.props.accountAddress.slice(0, 5) + '...'} */}
-                {this.props.accountAddress}{' '}
+                {this.props.accountAddress}
               </button>
             )}
           </div>

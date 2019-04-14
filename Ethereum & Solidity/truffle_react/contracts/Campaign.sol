@@ -86,4 +86,17 @@ contract Campaign {
     function getRequestsCount() public view returns (uint) {
         return requests.length;
     }
+
+    function getRequests(uint index) public view returns (string memory, uint, address, bool, uint ) {
+        Request storage request = requests[index];
+
+        return (
+            request.description,
+            request.value,
+            request.recipient,
+            request.complete,
+            request.approvalCount
+        );
+    }
+
 }

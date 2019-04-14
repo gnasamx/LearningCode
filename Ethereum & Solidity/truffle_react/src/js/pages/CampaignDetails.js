@@ -6,12 +6,12 @@ import Campaign from '../../../build/contracts/Campaign.json'
 import ContributionCard from '../components/ContributionCard'
 import ContributionForm from '../components/ContributionForm'
 import CreateRequestForm from '../components/CreateRequestForm'
+import AllRequestCard from '../components/AllRequestsCard'
 
 class CampaignDetails extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      account: '0x0',
       campaignAddress: this.props.match.params.camp,
       creator: null,
       cTitle: '',
@@ -20,7 +20,12 @@ class CampaignDetails extends React.Component {
       campaignInstance: null,
       contributedAmount: 0,
       backersCount: 0,
-      contributionAmtInput: ''
+      contributionAmtInput: '',
+      requestPurpose: '',
+      requestWorkerAdd: '0x0',
+      requestEthAmt: 0,
+      totalRequestsCount: 0,
+      totalRequestArr: []
     }
 
     if (typeof web3 != 'undefined') {
@@ -32,11 +37,9 @@ class CampaignDetails extends React.Component {
     }
 
     this.web3 = new Web3(this.web3Provider)
-    this.account = web3.eth.accounts.toString()
   }
 
   componentDidMount() {
-    this.setState({ account: web3.eth.accounts.toString() })
     this.campaign = TruffleContract(Campaign)
     this.campaign.setProvider(this.web3Provider)
 
@@ -45,11 +48,13 @@ class CampaignDetails extends React.Component {
       try {
         this.campaign.at(this.state.campaignAddress).then(campaignInstance => {
           this.setState({ campaignInstance })
-          console.log('THEn', this.state.campaignInstance)
+          // console.log('Then', this.state.campaignInstance)
+          // Get creator details
           campaignInstance.manager().then(oo => {
             // console.log(`Manager: => ${oo}`)
             this.setState({ creator: oo })
           })
+          // Get campaign summary
           campaignInstance.getSummary().then(summary => {
             // console.log('summary ; ', summary)
             this.setState({ cTitle: summary[0] })
@@ -57,6 +62,24 @@ class CampaignDetails extends React.Component {
             this.setState({ minContribution: summary[2].toString() })
             this.setState({ contributedAmount: summary[3].toString() })
             this.setState({ backersCount: summary[5].toString() })
+            this.setState({ creator: summary[6].toString() })
+          })
+          // Get total requests count
+          this.state.campaignInstance.getRequestsCount().then(rc => {
+            console.log(`Request count : ${rc}`)
+            this.setState({ totalRequestsCount: rc })
+            // Get all request data
+            if (rc >= 1) {
+              let totReqArr = []
+              for (let i = 0; i < rc; i++) {
+                campaignInstance.getRequests(i).then(ar => {
+                  // console.log('All requests: ', ar)
+                  totReqArr.push(ar)
+                  // console.log('totReqArr', totReqArr)
+                  this.setState({ totalRequestArr: totReqArr })
+                })
+              }
+            }
           })
         })
       } catch (error) {
@@ -71,29 +94,33 @@ class CampaignDetails extends React.Component {
 
   handleContribution = e => {
     e.preventDefault()
-    console.log(
-      'Yor contribution has started; ',
-      this.state.contributionAmtInput
-    )
-    // console.log('handleContribution', this.state.campaignInstance)
-    if (this.state.contributionAmtInput > this.state.minContribution) {
-      this.state.campaignInstance
-        .contribute({
-          from: web3.eth.accounts.toString(),
-          value: this.state.contributionAmtInput,
-          gas: 4712388,
-          gasPrice: 100000000000
-        })
-        .then(() => {
-          console.log('Successful contribution')
-          this.reRender()
-        })
-    } else {
+    try {
       console.log(
-        `Enter minimum contribution amount greater than ${
-          this.state.minContribution
-        }`
+        'Yor contribution has started; ',
+        this.state.contributionAmtInput
       )
+      // console.log('handleContribution', this.state.campaignInstance)
+      if (this.state.contributionAmtInput > this.state.minContribution) {
+        this.state.campaignInstance
+          .contribute({
+            from: web3.eth.accounts.toString(),
+            value: this.state.contributionAmtInput,
+            gas: 4712388,
+            gasPrice: 100000000000
+          })
+          .then(() => {
+            console.log('Successful contribution')
+            this.reRender()
+          })
+      } else {
+        console.log(
+          `Enter minimum contribution amount greater than ${
+            this.state.minContribution
+          }`
+        )
+      }
+    } catch (error) {
+      console.log('Something went wrong in contributing in campaign')
     }
   }
 
@@ -107,19 +134,70 @@ class CampaignDetails extends React.Component {
     console.log('Reload completed')
   }
 
+  requestChangeHandler = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
+  handleApprove = index => {
+    console.log(index)
+    try {
+      this.state.campaignInstance
+        .approveRequest(index, {
+          from: web3.eth.accounts.toString(),
+          gas: 4712388,
+          gasPrice: 100000000000
+        })
+        .then(ar => {
+          console.log(`Request approved ${JSON.stringify(ar)}`)
+          this.reRender()
+        })
+    } catch (error) {
+      console.log('Something went wrong while approving the request')
+    }
+  }
+
+  handleFinalize = index => {
+    console.log(index)
+  }
+
+  createNewRequestHandler = e => {
+    e.preventDefault()
+    try {
+      let { requestPurpose, requestWorkerAdd, requestEthAmt } = this.state
+      if (requestPurpose && requestWorkerAdd && requestEthAmt > 0) {
+        this.state.campaignInstance
+          .createRequest(requestPurpose, requestEthAmt, requestWorkerAdd, {
+            from: web3.eth.accounts.toString(),
+            gas: 4712388,
+            gasPrice: 100000000000
+          })
+          .then(o => {
+            console.log(`Created request => ${o}`)
+            this.reRender()
+          })
+      } else {
+        console.log('Check fields')
+      }
+    } catch (error) {
+      console.log('Something went wrong in creating new request:', error)
+    }
+  }
+
   render() {
     let {
-      cTitle,
-      cDesc,
       creator,
-      account,
       minContribution,
       contributedAmount,
-      backersCount
+      backersCount,
+      requestPurpose,
+      requestWorkerAdd,
+      requestEthAmt,
+      totalRequestArr
     } = this.state
+
     return (
       <React.Fragment>
-        <Navbar accountAddress={account} />
+        <Navbar accountAddress={web3.eth.accounts.toString()} />
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -139,16 +217,6 @@ class CampaignDetails extends React.Component {
               </div>
             </div>
           </div>
-          {/* <div className="rol mb-3">
-            <div className="col">
-              <button
-                onClick={this.handleContribution}
-                className="btn btn-success"
-              >
-                Contribute
-              </button>
-            </div>
-          </div> */}
 
           <div className="rol mb-3">
             <div className="card">
@@ -181,19 +249,54 @@ class CampaignDetails extends React.Component {
             </div>
           </div>
 
+          {creator === web3.eth.accounts.toString() && (
+            <div className="rol mb-3">
+              <div className="card">
+                <div className="card-body">
+                  <div className="card-title font-weight-bold">
+                    Create Request
+                  </div>
+                  <CreateRequestForm
+                    requestChangeHandler={this.requestChangeHandler}
+                    requestPurpose={requestPurpose}
+                    requestWorkerAdd={requestWorkerAdd}
+                    requestEthAmt={requestEthAmt}
+                    createNewRequestHandler={this.createNewRequestHandler}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="rol mb-3">
             <div className="card">
               <div className="card-body">
                 <div className="card-title font-weight-bold">
-                  Create Request
+                  Request Details
                 </div>
-                <CreateRequestForm />
+                <AllRequestCard
+                  totalRequestArr={totalRequestArr}
+                  handleApprove={this.handleApprove}
+                  handleFinalize={this.handleFinalize}
+                />
               </div>
             </div>
           </div>
         </div>
       </React.Fragment>
     )
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // console.log(prevProps, prevState)
+    // console.log('State creator  : ', this.state.creator)
+    // console.log('creator : ', prevState.creator)
+    // console.log('web3.eth.accounts : ', web3.eth.accounts.toString())
+    // if (prevState.creator !== web3.eth.accounts.toString()) {
+    //   console.log('TRUE , cdu')
+    // }
+    // console.log(this.state.campaignInstance)
+    // this.getAllRequests()
   }
 }
 export default CampaignDetails
