@@ -1,16 +1,16 @@
-### ReactNodejsSalesDashboard
+### :chart_with_upwards_trend: ReactNodejsSalesDashboard
 
-## Installing
+#### :arrow_down: Installing
 
-> 1. Install
+**Install**
 
 - `npm install`
 
-> 2. Run server
+**Run server**
 
 - Webpack build - `npm run build`
 - Start express server - `npm run dev`
 
-> 3. Run React client
+**Run React client**
 
 - `npm start`
