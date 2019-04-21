@@ -46,6 +46,10 @@ const UserSchema = new Schema({
       message:
         'Password is not a valid password! Must have uppercase, lowercase, numbers! '
     }
+  },
+  cart: {
+    type: Schema.Types.ObjectId,
+    ref: 'Cart'
   }
 })
 
@@ -79,6 +83,12 @@ UserSchema.methods = {
       token: `JWT ${this.createToken()}`
     }
   }
+}
+
+UserSchema.statics.createCart = async function(userId) {
+  return this.create({
+    user: userId
+  })
 }
 
 export default mongoose.model('User', UserSchema)

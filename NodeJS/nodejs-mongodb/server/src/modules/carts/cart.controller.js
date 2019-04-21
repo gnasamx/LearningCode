@@ -1,22 +1,59 @@
 import Cart from './cart.model'
 import Product from '../products/product.model'
 
-export async function addProductToCart(req, res) {
+// Create cart for each user when sign up
+export async function createCartForSignupUser(req, res) {
   try {
-    const product = await Product.findById(req.params.id)
-    let newCartProduct = new Cart({
-      _id: product._id,
-      name: product.name,
-      price: product.price,
-      details: product.details,
-      image: product.image
+    let cart = await Cart.createCart(req.user._id)
+    console.log(cart, req.user._id)
+    return res.status(201).json({
+      cart: cart,
+      message: 'Cart is created for you'
     })
-    console.log(`final newCartProduct ${newCartProduct}`)
-    await newCartProduct.save()
-    res.status(201).json({
-      cartProduct: newCartProduct,
-      message: 'Product added to cart'
+  } catch (error) {
+    return res.status(400).json({
+      error: error,
+      message: 'Something went wrong while creating cart'
     })
+  }
+}
+
+export async function addProductToCart(req, res) {
+  // try {
+  //   const isProductAlreadyInCart = await Cart.findById(req.params.id)
+  //   if (!isProductAlreadyInCart) {
+  //     const product = await Product.findById(req.params.id)
+  //     let newCartProduct = new Cart({
+  //       _id: product._id,
+  //       name: product.name,
+  //       price: product.price,
+  //       details: product.details,
+  //       image: product.image
+  //     })
+  //     console.log(`final newCartProduct ${newCartProduct}`)
+  //     await newCartProduct.save()
+  //     res.status(201).json({
+  //       cartProduct: newCartProduct,
+  //       message: 'Product added to cart'
+  //     })
+  //   } else {
+  //     res.status(201).json({
+  //       cartProduct: isProductAlreadyInCart,
+  //       message: 'Product already added to your cart'
+  //     })
+  //   }
+  // } catch (error) {
+  //   return res
+  //     .status(400)
+  //     .json({ error: error, message: 'Failed to add product into cart' })
+  // }
+
+  try {
+    const product = Product.findOne(req.params.id).populate('product')
+    console.log(`Got product ${product}`)
+    
+
+
   } catch (error) {
     return res
       .status(400)

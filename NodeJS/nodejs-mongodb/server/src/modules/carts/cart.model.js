@@ -1,30 +1,31 @@
 import mongoose, { Schema } from 'mongoose'
 
 const CartSchema = new Schema({
-  name: {
-    type: String,
-    required: [true, 'Product added in cart should have name'],
-    trim: true
-  },
-  details: {
-    type: String,
-    required: [true, 'Product added in cart should have description'],
-    trim: true
-  },
-  price: {
-    type: Number,
-    required: ['Product added in cart should have price'],
-    trim: true
-  },
-  quantity: {
-    type: Number,
-    required: true,
-    default: 1
-  },
-  image: {
-    type: String,
-    required: [true, 'Product added in cart should have image']
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      quantity: {
+        type: Number,
+        default: 1
+      }
+    }
+  ],
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 })
+
+
+
+CartSchema.statics.addProductToCart = async function(productData, cartId) {
+  const Product = mongoose.model('Product')
+  const product = await new Product({ ...productData, cart: cartId })
+  await this.findByIdAndUpdate(cartId, { $push: { products: product.id } })
+  return {
+    product: await product.save()
+  }
+}
 
 export default mongoose.model('Cart', CartSchema)

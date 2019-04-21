@@ -1,7 +1,6 @@
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt'
-import constants from '../config/constants'
 import User from '../modules/users/user.model'
 
 const localOpts = {

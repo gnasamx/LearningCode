@@ -23,7 +23,6 @@ class Home extends Component {
       })
       .then(json => {
         this.setState({ allProducts: json.products })
-        console.log(json.products)
       })
       .catch(err => {
         console.log(err)

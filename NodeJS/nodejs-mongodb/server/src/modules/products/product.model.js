@@ -16,7 +16,11 @@ const ProductSchema = new Schema({
     required: ['Product cost is required'],
     trim: true
   },
-  image: { type: String, required: [true, 'Product image is required'] }
+  image: { type: String, required: [true, 'Product image is required'] },
+  cart: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Cart'
+  }]
 })
 
 export default mongoose.model('Product', ProductSchema)
