@@ -11,6 +11,8 @@ export async function addProduct(req, res) {
       image: req.file.path
     })
 
+    console.log(product)
+
     await product.save()
 
     return res.status(201).json({

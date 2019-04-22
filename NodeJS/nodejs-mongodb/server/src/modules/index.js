@@ -4,6 +4,7 @@ import cartRoutes from './carts/cart.routes'
 import { authJwt } from '../services/auth.services'
 
 export default app => {
+  
   // Authentication route
   app.use('/api/v1/users', userRoutes)
 
