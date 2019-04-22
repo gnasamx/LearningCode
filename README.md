@@ -1,4 +1,4 @@
-## LearningCodeFromOthers
+## LearningCode
 
 **ReactJS**
 
