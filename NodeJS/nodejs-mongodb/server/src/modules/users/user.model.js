@@ -90,7 +90,7 @@ UserSchema.statics.createCart = async function(userId) {
   const Cart = mongoose.model('Cart')
   const cart = await new Cart({ user: userId })
   console.log('Cart;', cart)
-  await this.findOneAndUpdate(userId, { cart: cart._id})
+  await this.findOneAndUpdate({ _id: userId }, { cart: cart._id })
 
   return {
     cart: await cart.save()
