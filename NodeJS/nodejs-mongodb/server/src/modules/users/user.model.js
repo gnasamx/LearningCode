@@ -47,12 +47,15 @@ const UserSchema = new Schema({
         'Password is not a valid password! Must have uppercase, lowercase, numbers! '
     }
   },
+  cart: {
+    type: Schema.Types.ObjectId,
+    ref: 'Cart'
+  }
 })
 
 UserSchema.pre('save', function(next) {
   if (this.isModified('password')) {
     this.password = this._hashPassword(this.password)
-    console.log(this.password)
     return next()
   }
   return next()
@@ -82,5 +85,16 @@ UserSchema.methods = {
   }
 }
 
+UserSchema.statics.createCart = async function(userId) {
+  console.log('Inside createCart: ', userId)
+  const Cart = mongoose.model('Cart')
+  const cart = await new Cart({ user: userId })
+  console.log('Cart;', cart)
+  await this.findOneAndUpdate(userId, { cart: cart._id})
+
+  return {
+    cart: await cart.save()
+  }
+}
 
 export default mongoose.model('User', UserSchema)
