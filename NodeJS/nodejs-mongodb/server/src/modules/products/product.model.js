@@ -19,4 +19,5 @@ const ProductSchema = new Schema({
   image: { type: String, required: [true, 'Product image is required'] },
 })
 
+
 export default mongoose.model('Product', ProductSchema)

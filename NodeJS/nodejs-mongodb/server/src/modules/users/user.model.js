@@ -3,7 +3,6 @@ import validator from 'validator'
 import { hashSync, compareSync } from 'bcrypt-nodejs'
 import { passwordReg } from './user.validations'
 import jwt from 'jsonwebtoken'
-import constants from '../../config/constants'
 
 const UserSchema = new Schema({
   email: {

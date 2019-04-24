@@ -6,7 +6,7 @@ const routes = new Router()
 
 // routes.post('/create', authJwt, cartController.createCartForSignupUser)
 routes.post('/:cartId/create/:productId', cartController.addProductToCart)
-routes.post('/update/:id', cartController.updateCartProduct)
+routes.post('/:cartId/update/:productId', cartController.updateCartProduct)
 routes.get('', cartController.fetchAllCartProducts)
 
 export default routes

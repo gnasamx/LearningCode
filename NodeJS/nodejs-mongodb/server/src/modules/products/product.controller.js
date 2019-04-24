@@ -1,6 +1,7 @@
 import Product from './product.model'
 import mongoose from 'mongoose'
 
+
 export async function addProduct(req, res) {
   try {
     const product = new Product({
