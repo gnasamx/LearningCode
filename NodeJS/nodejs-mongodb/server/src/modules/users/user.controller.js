@@ -2,7 +2,6 @@ import User from './user.model'
 
 export async function signUp(req, res) {
   try {
-    console.log('Inside try')
     const user = await User.create(req.body)
     console.log('user:', user)
     console.log('userId:', user._id)

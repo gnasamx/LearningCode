@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const ProductLook = ({ eachProduct }) => {
   let imageUrl = `http://localhost:8000/${eachProduct.image}`
-  let productId = `/${eachProduct._id}`
+  let productId = `${eachProduct._id}`
   return (
     <div className="col-sm-6 col-lg-3 mb-5 ">
-      <Link to={productId} className="text-dark card text-center d-block">
+      <Link to={'/product/' + productId} className="text-dark card text-center d-block">
         <img
           src={imageUrl}
           className="img-fluid"

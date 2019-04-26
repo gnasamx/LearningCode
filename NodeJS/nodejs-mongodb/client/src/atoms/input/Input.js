@@ -1,10 +1,11 @@
 import React from 'react'
 import './input.css'
 
-export const Input = ({ type, value, onChangeHandler, placeholder }) => (
+export const Input = ({ type, name, inputValue, onChangeHandler, placeholder }) => (
   <input
     type={type}
-    value={value}
+    name={name}
+    value={inputValue}
     onChange={onChangeHandler}
     placeholder={placeholder}
     className="input"

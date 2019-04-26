@@ -4,7 +4,55 @@ import { Input } from '../../atoms/input/Input'
 import './login.css'
 
 class Login extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      password: ''
+    }
+  }
+
+  onChangeHandler = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
+  onSubmit = e => {
+    e.preventDefault()
+    const user = {
+      email: this.state.email,
+      password: this.state.password
+    }
+    console.log(user)
+    fetch('http://localhost:8000/api/v1/user/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('token')
+      },
+      body: JSON.stringify(user)
+    })
+      .then(response => {
+        return response.json(user)
+      })
+      .then(data => {
+        console.log(data)
+        localStorage.setItem('token', JSON.stringify(data.token))
+        console.log(data)
+        this.props.history.push('/')
+      })
+
+    this.setState({
+      firstName: '',
+      lastName: '',
+      userName: '',
+      email: '',
+      password: ''
+    })
+  }
+
   render() {
+    let { email, password } = this.state
     return (
       <div className="layout-signup">
         <div className="page-signup">
@@ -36,23 +84,33 @@ class Login extends Component {
                   </section>
                   <section className="register">
                     <div className="content">
-                      <form>
+                      <form onSubmit={this.onSubmit}>
                         <fieldset>
                           <ul>
                             <li>
-                              <Input placeholder="Email" type="email" />
+                              <Input
+                                placeholder="Email"
+                                type="email"
+                                name="email"
+                                inputValue={email}
+                                onChangeHandler={this.onChangeHandler}
+                              />
                             </li>
                             <li>
-                              <Input placeholder="Password" type="password" />
+                              <Input
+                                placeholder="Password"
+                                type="password"
+                                name="password"
+                                inputValue={password}
+                                onChangeHandler={this.onChangeHandler}
+                              />
                             </li>
                             <li className="li-terms-notice">
                               <p className="notice">
                                 If you click "Log in with Google" and are not a
                                 Shop's user, you will be registered and you
                                 agree to Shop's &nbsp;
-                                <Link to="/signup">
-                                  Terms and Conditions
-                                </Link>
+                                <Link to="/signup">Terms and Conditions</Link>
                                 and &nbsp;
                                 <Link to="/signup">Privacy Policy</Link>.
                               </p>

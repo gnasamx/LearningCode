@@ -5,8 +5,16 @@ import { authJwt } from '../../services/auth.services'
 const routes = new Router()
 
 // routes.post('/create', authJwt, cartController.createCartForSignupUser)
-routes.post('/:cartId/create/:productId', cartController.addProductToCart)
-routes.post('/:cartId/update/:productId', cartController.updateCartProduct)
-routes.get('', cartController.fetchAllCartProducts)
+routes.post(
+  '/:cartId/create/:productId',
+  authJwt,
+  cartController.addProductToCart
+)
+routes.post(
+  '/:cartId/update/:productId',
+  authJwt,
+  cartController.updateCartProduct
+)
+routes.get('', authJwt, cartController.fetchAllCartProducts)
 
 export default routes

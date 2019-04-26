@@ -4,8 +4,60 @@ import { Input } from '../../atoms/input/Input'
 import './signup.css'
 
 class Signup extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      firstName: '',
+      lastName: '',
+      userName: '',
+      email: '',
+      password: ''
+    }
+  }
+
+  onChangeHandler = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
+  signMeUp = e => {
+    e.preventDefault()
+
+    const user = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      userName: this.state.userName,
+      email: this.state.email,
+      password: this.state.password
+    }
+    console.log(user)
+    fetch('http://localhost:8000/api/v1/user/signup', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(response => {
+        return response.json(user)
+      })
+      .then(data => {
+        localStorage.setItem('token', JSON.stringify(data.user.token))
+        console.log(data.user)
+        console.log(data.message)
+      })
+
+    this.setState({
+      firstName: '',
+      lastName: '',
+      userName: '',
+      email: '',
+      password: ''
+    })
+  }
 
   render() {
+    let { firstName, lastName, userName, email, password } = this.state
     return (
       <div className="layout-signup">
         <div className="page-signup">
@@ -37,21 +89,55 @@ class Signup extends Component {
                       <h2 className="center hdr-l">
                         Sign up with your email address
                       </h2>
-                      <form>
+                      <form onSubmit={this.signMeUp}>
                         <fieldset>
                           <ul>
                             <li>
-                              <Input placeholder="Email" type="email" />
+                              <Input
+                                placeholder="Firstname"
+                                type="text"
+                                name="firstName"
+                                inputValue={firstName}
+                                onChangeHandler={this.onChangeHandler}
+                              />
                             </li>
                             <li>
-                              <Input placeholder="Password" type="password" />
+                              <Input
+                                placeholder="Lastname"
+                                type="text"
+                                name="lastName"
+                                inputValue={lastName}
+                                onChangeHandler={this.onChangeHandler}
+                              />
                             </li>
                             <li>
                               <Input
                                 placeholder="What should we call you?"
                                 type="text"
+                                name="userName"
+                                inputValue={userName}
+                                onChangeHandler={this.onChangeHandler}
                               />
                             </li>
+                            <li>
+                              <Input
+                                placeholder="Email"
+                                type="email"
+                                name="email"
+                                inputValue={email}
+                                onChangeHandler={this.onChangeHandler}
+                              />
+                            </li>
+                            <li>
+                              <Input
+                                placeholder="Password"
+                                type="password"
+                                name="password"
+                                inputValue={password}
+                                onChangeHandler={this.onChangeHandler}
+                              />
+                            </li>
+
                             <li className="li-terms-notice">
                               <p className="notice">
                                 By clicking on Sign up, you agree to Shop's
@@ -69,10 +155,13 @@ class Signup extends Component {
                             </li>
                           </ul>
                         </fieldset>
-                        <button className="btn btn-green btn-block">Sign Up</button>
+                        <button className="btn btn-green btn-block">
+                          Sign Up
+                        </button>
                       </form>
-                      <p className="primary">Already have an account?&nbsp; 
-                      <Link to="/login">Log in</Link>
+                      <p className="primary">
+                        Already have an account?&nbsp;
+                        <Link to="/login">Log in</Link>
                       </p>
                     </div>
                   </section>
